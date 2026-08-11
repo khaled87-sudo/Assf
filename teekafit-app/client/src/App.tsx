@@ -1,20 +1,32 @@
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/NotFound";
+import { useState } from "react";
 import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
+import TeekafitShell from "./components/TeekafitShell";
+import TeekafitSplashScreen from "./components/TeekafitSplashScreen";
 import { ThemeProvider } from "./contexts/ThemeContext";
-import Home from "./pages/Home";
+import Dashboard from "./pages/Dashboard";
+import ExerciseLibrary from "./pages/ExerciseLibrary";
+import Nutrition from "./pages/Nutrition";
+import Workouts from "./pages/Workouts";
 
 function Router() {
-  // make sure to consider if you need authentication for certain routes
+  // Auth isn't wired up yet (no OAuth env configured in this environment) —
+  // these screens are open, mock-data demos. See todo.md for the roadmap.
   return (
-    <Switch>
-      <Route path={"/"} component={Home} />
-      <Route path={"/404"} component={NotFound} />
-      {/* Final fallback route */}
-      <Route component={NotFound} />
-    </Switch>
+    <TeekafitShell>
+      <Switch>
+        <Route path={"/"} component={Dashboard} />
+        <Route path={"/workouts"} component={Workouts} />
+        <Route path={"/nutrition"} component={Nutrition} />
+        <Route path={"/exercises"} component={ExerciseLibrary} />
+        <Route path={"/404"} component={NotFound} />
+        {/* Final fallback route */}
+        <Route component={NotFound} />
+      </Switch>
+    </TeekafitShell>
   );
 }
 
@@ -24,15 +36,21 @@ function Router() {
 // - If you want to make theme switchable, pass `switchable` ThemeProvider and use `useTheme` hook
 
 function App() {
+  const [showSplash, setShowSplash] = useState(true);
+
   return (
     <ErrorBoundary>
       <ThemeProvider
-        defaultTheme="light"
+        defaultTheme="dark"
         // switchable
       >
         <TooltipProvider>
           <Toaster />
-          <Router />
+          {showSplash ? (
+            <TeekafitSplashScreen onFinish={() => setShowSplash(false)} />
+          ) : (
+            <Router />
+          )}
         </TooltipProvider>
       </ThemeProvider>
     </ErrorBoundary>
