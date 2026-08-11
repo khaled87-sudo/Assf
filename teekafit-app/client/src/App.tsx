@@ -2,7 +2,8 @@ import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/NotFound";
 import { useState } from "react";
-import { Route, Switch } from "wouter";
+import { Route, Router, Switch } from "wouter";
+import { useHashLocation } from "wouter/use-hash-location";
 import ErrorBoundary from "./components/ErrorBoundary";
 import TeekafitShell from "./components/TeekafitShell";
 import TeekafitSplashScreen from "./components/TeekafitSplashScreen";
@@ -12,21 +13,28 @@ import ExerciseLibrary from "./pages/ExerciseLibrary";
 import Nutrition from "./pages/Nutrition";
 import Workouts from "./pages/Workouts";
 
-function Router() {
+function AppRouter() {
   // Auth isn't wired up yet (no OAuth env configured in this environment) —
   // these screens are open, mock-data demos. See todo.md for the roadmap.
+  //
+  // Hash-based location (routes as "#/workouts" instead of "/workouts") so
+  // navigation keeps working no matter what path prefix the app is served
+  // under (a subpath deploy, a static preview export, etc.) — path-based
+  // routing 404s the moment the host isn't serving the app at "/".
   return (
-    <TeekafitShell>
-      <Switch>
-        <Route path={"/"} component={Dashboard} />
-        <Route path={"/workouts"} component={Workouts} />
-        <Route path={"/nutrition"} component={Nutrition} />
-        <Route path={"/exercises"} component={ExerciseLibrary} />
-        <Route path={"/404"} component={NotFound} />
-        {/* Final fallback route */}
-        <Route component={NotFound} />
-      </Switch>
-    </TeekafitShell>
+    <Router hook={useHashLocation}>
+      <TeekafitShell>
+        <Switch>
+          <Route path={"/"} component={Dashboard} />
+          <Route path={"/workouts"} component={Workouts} />
+          <Route path={"/nutrition"} component={Nutrition} />
+          <Route path={"/exercises"} component={ExerciseLibrary} />
+          <Route path={"/404"} component={NotFound} />
+          {/* Final fallback route */}
+          <Route component={NotFound} />
+        </Switch>
+      </TeekafitShell>
+    </Router>
   );
 }
 
@@ -49,7 +57,7 @@ function App() {
           {showSplash ? (
             <TeekafitSplashScreen onFinish={() => setShowSplash(false)} />
           ) : (
-            <Router />
+            <AppRouter />
           )}
         </TooltipProvider>
       </ThemeProvider>
