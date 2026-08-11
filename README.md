@@ -4,6 +4,17 @@
 
 ## المحتوى
 
+### `teekafit-app/`
+**كود المشروع الفعلي** (Full-stack TypeScript: React 19 + Vite + Tailwind + shadcn/ui من جهة العميل، Express + tRPC + Drizzle ORM (MySQL) من جهة السيرفر، مصادقة عبر Manus OAuth). هذا هو الأساس التقني الحقيقي للتطبيق.
+
+⚠️ **مهم:** هذا حاليًا **مجرد سكافولد/قالب فارغ** من Manus (قالب "Web App (db,user)")، وليس تطبيقًا مبنيًا فعليًا:
+- `client/src/pages/Home.tsx` لسا صفحة مثال ("Example Page") — ما فيه أي شاشة من شاشات Teekafit (Dashboard، Workout Builder، Nutrition Tracker، ...).
+- `drizzle/schema.ts` فيه فقط جدول `users` الأساسي للمصادقة — بدون جداول التمارين/الوجبات/الأهداف/الـ streak.
+- `server/routers.ts` فيه فقط `auth` — بدون أي راوترات لميزات فعلية.
+- `todo.md` يوثّق الخطة الكاملة، لكن معظم بنودها غير منجزة بعد (فقط "التخطيط الأساسي" ✅).
+
+راجع [`teekafit-app/todo.md`](teekafit-app/todo.md) للخطة الكاملة و[`teekafit-app/package.json`](teekafit-app/package.json) للتشغيل (`pnpm install` ثم `pnpm dev`، ويحتاج `DATABASE_URL` وباقي متغيرات البيئة الخاصة بـ Manus OAuth).
+
 ### `docs/`
 مستندات بحثية ومقترحات تخص تسمية المشروع وهوية العلامة التجارية وتجربة المستخدم:
 
@@ -23,10 +34,10 @@
 - `IMG_0225.JPG` — صورة مرجعية إضافية.
 
 ### `components/`
-مكوّن كود واحد (React + Tailwind) لشاشة البداية (Splash Screen)، وصل من مانوس ضمن حزمة لاحقة:
+مكوّن كود واحد (React + Tailwind) لشاشة البداية (Splash Screen)، وصل من مانوس قبل الحصول على السكافولد الكامل:
 
-- **TeekafitSplashScreen.jsx** — مكوّن واجهة لعرض شعار Teekafit مع تأثيرات حركية بسيطة. كود React عادي (JSX + Tailwind classes)، وليس React Native، وغير مرتبط بأي scaffold مشروع فعلي حتى الآن — مجرد ملف مكوّن منفرد.
+- **TeekafitSplashScreen.jsx** — مكوّن واجهة لعرض شعار Teekafit مع تأثيرات حركية بسيطة. لم يُدمج بعد داخل `teekafit-app/` (يستخدم Tailwind classes مباشرة بدون بنية shadcn/ui المستخدمة في السكافولد).
 
 ## ملاحظة
 
-إلى الآن، كل ما وصل من مانوس لمشروع Teekafit هو مستندات بحثية، أصول تصميمية، ومكوّن واجهة واحد (splash screen) — ولا يوجد بعد مشروع تطبيق متكامل (لا scaffold ولا package.json ولا باقي الشاشات). أي عمل تطوير لاحق يحتاج إضافة منفصلة.
+عندنا الآن سكافولد تقني حقيقي (`teekafit-app/`) بالإضافة إلى المستندات البحثية والأصول التصميمية، لكن لا توجد بعد أي شاشة أو ميزة من ميزات Teekafit الفعلية مبنية داخل الكود — الخطوة التالية هي تنفيذ بنود `todo.md` (قاعدة البيانات، شاشة الترحيب، المصادقة، الداشبورد، جدول التمارين، متتبع التغذية، مكتبة التمارين).
