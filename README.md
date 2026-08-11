@@ -19,6 +19,7 @@
 - `tt_logo_1.png` … `tt_logo_4.png` — تصاميم شعار مختصرة (TT).
 - `teekafit_splash_1.png`, `teekafit_splash_2.png` — تصاميم شاشة البداية (Splash Screen).
 - `teekafit_font_1.png` … `teekafit_font_3.png` — عيّنات خطوط مقترحة.
+- `teekafit_logo_modified_1.png`, `teekafit_logo_modified_2.png` — نسخ معدّلة من الشعار.
 - `IMG_0225.JPG` — صورة مرجعية إضافية.
 
 ## ملاحظة
